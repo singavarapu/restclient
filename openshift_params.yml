@@ -1,0 +1,28 @@
+---
+- name: Build Settings
+  artifactLocation: "./target/restclient-0.0.1-SNAPSHOT.jar"
+- name: Base Settings
+  applicationName: "restclient"
+  namespace: "restclient"
+  configMapLocation: "./openshift/"
+  configMapName: "configmap-restclient"
+  readinessProbeURI: "/actuator/health"
+  readinessProbe:
+    exec:
+      command:
+        - cat
+        - /actuator/health
+    initialDelaySeconds: 30
+    periodSeconds: 30
+  readinessProbeInitialDelaySeconds: 30
+  readinessProbePeriodSeconds: 30
+  routerTimeout: "30s"
+  quotaSize: "large"
+  replicas: 1
+- name: DEV Settings
+  env: "dev"
+  quotaSize: "large"
+  replicas: 5
+- name: Lab Settings
+  env: "lab"
+...
